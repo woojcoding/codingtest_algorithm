@@ -6,19 +6,11 @@ public class Main {
 
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        int result = 0;
-
-        String input = br.readLine();
-
-        String reverse = new StringBuffer(input).reverse().toString();
-
-        if (input.equals(reverse)) {
-            result = 1;
-        }
+        StringBuilder sb = new StringBuilder(br.readLine());
 
         br.close();
 
-        bw.write(result + "");
+        bw.write((sb.toString().equals(sb.reverse().toString()) ? 1 : 0) + "");
         bw.flush();
         bw.close();
     }
