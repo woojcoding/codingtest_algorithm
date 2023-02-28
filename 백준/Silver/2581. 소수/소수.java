@@ -2,9 +2,10 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.ArrayList;
 
 public class Main {
+    public static boolean[] prime;
+
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
@@ -12,26 +13,30 @@ public class Main {
 
         StringBuilder sb = new StringBuilder();
 
-        int min = Integer.parseInt(br.readLine());
-        int max = Integer.parseInt(br.readLine());
+        int m = Integer.parseInt(br.readLine());
+        int n = Integer.parseInt(br.readLine());
 
-        ArrayList<Integer> list = new ArrayList<>();
+        prime = new boolean[n + 1];
+
+        prime();
 
         int sum = 0;
 
-        for (int i = min; i <= max; i++) {
-            if (isPrime(i)) {
-                list.add(i);
+        int min = Integer.MAX_VALUE;
+
+        for (int i = m; i <= n; i++) {
+            if (prime[i] == false) {
+                sum += i;
+
+                if (min == Integer.MAX_VALUE) {
+                    min = i;
+                }
             }
         }
 
-        for (int prime : list) {
-            sum += prime;
-        }
-
-        if (!list.isEmpty()) {
+        if (sum != 0) {
             sb.append(sum).append("\n");
-            sb.append(list.get(0));
+            sb.append(min);
         }
 
         else {
@@ -45,22 +50,14 @@ public class Main {
         bw.close();
 
     }
+    
+    public static void prime() {
+        prime[0] = prime[1] = true;
 
-    static boolean isPrime(int num) {
-        if (num < 2) {
-            return false;
-        }
-
-        if (num == 2) {
-            return true;
-        }
-
-        for (int i = 2; i <= Math.sqrt(num); i++) {
-            if(num % i == 0) {
-                return false;
+        for (int i = 2; i <= Math.sqrt(prime.length); i++) {
+            for (int j = i * i; j < prime.length; j = j + i) {
+                prime[j] = true;
             }
         }
-
-        return true;
     }
 }
